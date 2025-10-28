@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simthembile Capa | Multimedia Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D1B2A;
+            --accent: #1B263B;
+            --highlight: #E0E1DD;
+            --cta: #00AEEF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--highlight);
+            overflow-x: hidden;
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--cta), #4CC9F0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card {
+            background: var(--accent);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid rgba(224, 225, 221, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: rgba(224, 225, 221, 0.2);
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--cta), #4CC9F0);
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--cta);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--cta) }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--cta), #4CC9F0);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--cta), #4CC9F0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 174, 239, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 174, 239, 0.4);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--cta);
+            color: var(--cta);
+        }
+        
+        .btn-outline:hover {
+            background: var(--cta);
+            color: white;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(224, 225, 221, 0.2);
+            border-top: 5px solid var(--cta);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .project-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .testimonial-card {
+            background: var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(224, 225, 221, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .quote-icon {
+            color: var(--cta);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        .github { background: #333; color: white; }
+        .linkedin { background: #0077b5; color: white; }
+        .instagram { background: #e4405f; color: white; }
+        .facebook { background: #1877f2; color: white; }
+        .tiktok { background: #000; color: white; }
+        .whatsapp { background: #25d366; color: white; }
+        
+        @media (max-width: 768px) {
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .typewriter {
+                white-space: normal;
+                border-right: none;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-primary/90 backdrop-blur-sm shadow-sm transition-colors duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text">Simthembile</a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-highlight">Home</a>
+                <a href="#about" class="nav-link text-highlight">About</a>
+                <a href="#skills" class="nav-link text-highlight">Skills</a>
+                <a href="#projects" class="nav-link text-highlight">Projects</a>
+                <a href="#testimonials" class="nav-link text-highlight">Testimonials</a>
+                <a href="#contact" class="nav-link text-highlight">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-full bg-accent text-highlight hover:bg-accent/80 transition-colors duration-300">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-accent py-4 px-6 hidden transition-all duration-300">
+            <a href="#home" class="block py-2 text-highlight hover:text-cta transition-colors duration-300">Home</a>
+            <a href="#about" class="block py-2 text-highlight hover:text-cta transition-colors duration-300">About</a>
+            <a href="#skills" class="block py-2 text-highlight hover:text-cta transition-colors duration-300">Skills</a>
+            <a href="#projects" class="block py-2 text-highlight hover:text-cta transition-colors duration-300">Projects</a>
+            <a href="#testimonials" class="block py-2 text-highlight hover:text-cta transition-colors duration-300">Testimonials</a>
+            <a href="#contact" class="block py-2 text-highlight hover:text-cta transition-colors duration-300">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="section pt-24">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 animate-on-scroll">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Hi, I'm <span class="gradient-text">Simthembile Capa</span></h1>
+                <h2 class="text-2xl md:text-3xl mb-6 text-highlight/80 typewriter">Multimedia Applications Developer</h2>
+                <p class="text-lg mb-8 text-highlight/80">Passionate about creating engaging digital experiences with modern web technologies. Skilled in front-end development, UI/UX design, and multimedia content creation.</p>
+                <div class="flex space-x-4">
+                    <a href="#projects" class="btn btn-primary pulse">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center animate-on-scroll">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 bg-accent rounded-full flex items-center justify-center floating">
+                    <div class="w-56 h-56 md:w-72 md:h-72 bg-primary rounded-full flex items-center justify-center">
+                        <div class="w-48 h-48 md:w-60 md:h-60 bg-highlight/10 rounded-full overflow-hidden border-4 border-accent">
+                            <img src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Simthembile Capa" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section bg-accent">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">About Me</h2>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-8 md:mb-0 animate-on-scroll">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold mb-4">Quick Facts</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-cta mr-3"></i>
+                                <span>Bellville South, Cape Town</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-graduation-cap text-cta mr-3"></i>
+                                <span>ICT Multimedia Applications</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-cta mr-3"></i>
+                                <span>078 369 5262</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-cta mr-3"></i>
+                                <span>capasimthembile@gmail.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="md:w-2/3 md:pl-12 animate-on-scroll">
+                    <h3 class="text-2xl font-semibold mb-6">My Journey</h3>
+                    <p class="text-highlight/80 mb-4">I'm a passionate Multimedia Applications student at Cape Peninsula University of Technology, expected to graduate in 2026. My journey in technology started with a Higher Certificate in ICT, and I've been expanding my skills ever since.</p>
+                    <p class="text-highlight/80 mb-4">I specialize in creating responsive, user-friendly interfaces with modern JavaScript frameworks and robust back-end systems. I'm constantly learning new technologies and improving my skills to stay at the forefront of web development.</p>
+                    <p class="text-highlight/80">When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or expanding my knowledge in emerging technologies.</p>
+                    
+                    <div class="mt-8 flex space-x-4">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-download mr-2"></i> Download CV
+                        </a>
+                        <a href="#contact" class="btn btn-outline">
+                            Get In Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">My Skills</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Frontend Skills -->
+                <div class="card p-6 animate-on-scroll">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-highlight/10 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-code text-cta text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Frontend Development</h3>
+                    </div>
+                    <p class="text-highlight/80 mb-4">Creating responsive and interactive user interfaces with modern frameworks.</p>
+                    <div class="flex flex-wrap">
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">HTML5</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">CSS3</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">JavaScript</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">React</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">Tailwind CSS</span>
+                    </div>
+                </div>
+                
+                <!-- Backend Skills -->
+                <div class="card p-6 animate-on-scroll">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-highlight/10 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-server text-cta text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Backend Development</h3>
+                    </div>
+                    <p class="text-highlight/80 mb-4">Building robust server-side applications and APIs with various technologies.</p>
+                    <div class="flex flex-wrap">
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">Node.js</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">PHP</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">MongoDB</span>
+                    </div>
+                </div>
+                
+                <!-- Tools & Other Skills -->
+                <div class="card p-6 animate-on-scroll">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-highlight/10 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-tools text-cta text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Tools & Other Skills</h3>
+                    </div>
+                    <p class="text-highlight/80 mb-4">Proficient with industry-standard tools and methodologies.</p>
+                    <div class="flex flex-wrap">
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">Git</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">GitHub</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">Figma</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">WordPress</span>
+                        <span class="bg-highlight/10 text-highlight px-3 py-1 rounded-full text-sm mr-2 mb-2">UI/UX Design</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skill Progress Bars -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="animate-on-scroll">
+                    <h3 class="text-xl font-semibold mb-6">Technical Proficiency</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-highlight">JavaScript & React</span>
+                            <span class="text-highlight">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-highlight">HTML & CSS</span>
+                            <span class="text-highlight">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-highlight">UI/UX Design</span>
+                            <span class="text-highlight">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-on-scroll">
+                    <h3 class="text-xl font-semibold mb-6">Professional Skills</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-highlight">Problem Solving</span>
+                            <span class="text-highlight">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-highlight">Teamwork</span>
+                            <span class="text-highlight">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-highlight">Communication</span>
+                            <span class="text-highlight">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section bg-accent">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">My Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card project-card animate-on-scroll">
+                    <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Delicious Bites Restaurant</h3>
+                        <p class="text-highlight/80 mb-4">A responsive restaurant website with WordPress reservation system and Tailwind CSS front-end.</p>
+                        <div class="flex justify-between">
+                            <a href="https://sim-99.github.io/Delicious-bite-restaurant/" target="_blank" class="text-cta hover:text-cta/80 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                            </a>
+                            <a href="#" class="text-highlight/80 hover:text-highlight transition-colors duration-300 flex items-center">
+                                <i class="fab fa-github mr-2"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="card project-card animate-on-scroll">
+                    <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Simxcvi Books</h3>
+                        <p class="text-highlight/80 mb-4">A client project for an online bookstore with focus on user experience and responsive design.</p>
+                        <div class="flex justify-between">
+                            <a href="https://sim-99.github.io/simxcvi-booksbooks.org.za/" target="_blank" class="text-cta hover:text-cta/80 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                            </a>
+                            <a href="#" class="text-highlight/80 hover:text-highlight transition-colors duration-300 flex items-center">
+                                <i class="fab fa-github mr-2"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card project-card animate-on-scroll">
+                    <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Gosselin Gourmet</h3>
+                        <p class="text-highlight/80 mb-4">A PHP group project developing an online platform for three stores with e-commerce functionality.</p>
+                        <div class="flex justify-between">
+                            <a href="https://sim-99.github.io/project/" target="_blank" class="text-cta hover:text-cta/80 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                            </a>
+                            <a href="#" class="text-highlight/80 hover:text-highlight transition-colors duration-300 flex items-center">
+                                <i class="fab fa-github mr-2"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 animate-on-scroll">
+                <a href="https://github.com/sim-99" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-github mr-2"></i> View All Projects on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Testimonials</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-highlight/80 mb-6">"Simthembile delivered an outstanding restaurant website for our business. His attention to detail and ability to integrate WordPress with a custom front-end was impressive. The reservation system works flawlessly."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-highlight/10 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Client" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <p class="text-highlight/60 text-sm">Restaurant Owner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-highlight/80 mb-6">"Working with Simthembile on our group project was a great experience. His technical skills in PHP and database integration were crucial to our success. He's a reliable team player with excellent problem-solving abilities."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-highlight/10 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Team Member" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Michael Chen</h4>
+                            <p class="text-highlight/60 text-sm">Project Team Lead</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-highlight/80 mb-6">"The bookstore website Simthembile created for us exceeded our expectations. His understanding of UI/UX principles resulted in a site that is both beautiful and easy to navigate. Our customers love the experience."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-highlight/10 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Client" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Emily Rodriguez</h4>
+                            <p class="text-highlight/60 text-sm">Bookstore Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section bg-accent">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Get In Touch</h2>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8 animate-on-scroll">
+                    <h3 class="text-2xl font-semibold mb-6">Let's Talk</h3>
+                    <p class="text-highlight/80 mb-6">I'm always open to discussing new opportunities, creative ideas, or partnerships to bring your visions to life.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-highlight/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-cta"></i>
+                            </div>
+                            <div>
+                                <p class="text-highlight/80">Email</p>
+                                <p class="font-semibold">capasimthembile@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-highlight/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-cta"></i>
+                            </div>
+                            <div>
+                                <p class="text-highlight/80">Phone</p>
+                                <p class="font-semibold">078 369 5262</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-highlight/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-cta"></i>
+                            </div>
+                            <div>
+                                <p class="text-highlight/80">Location</p>
+                                <p class="font-semibold">Bellville South, Cape Town</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="text-xl font-semibold mb-4">Connect With Me</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/sim-99" target="_blank" class="social-icon github">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-icon linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-icon instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon tiktok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                            <a href="https://wa.me/27783695262" target="_blank" class="social-icon whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 animate-on-scroll">
+                    <form id="contactForm" class="card p-8">
+                        <div class="mb-6">
+                            <label for="name" class="block text-highlight mb-2">Full Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-highlight/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent transition-all duration-300 bg-accent text-highlight" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-highlight mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-highlight/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent transition-all duration-300 bg-accent text-highlight" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-highlight mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border border-highlight/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent transition-all duration-300 bg-accent text-highlight" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-highlight mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-highlight/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cta focus:border-transparent transition-all duration-300 bg-accent text-highlight" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn btn-primary">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary py-8 border-t border-highlight/10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2023 Simthembile Capa. All rights reserved.</p>
+            <p class="mt-2 text-highlight/60">Designed with <i class="fas fa-heart text-cta"></i> and modern web technologies</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-cta text-white rounded-full shadow-lg hover:bg-cta/80 transition-colors duration-300 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen after 1.5 seconds
+            setTimeout(function() {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                
+                // Animate elements with the 'animate-on-scroll' class
+                const animateElements = document.querySelectorAll('.animate-on-scroll');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animated');
+                            // Animate skill bars
+                            if (entry.target.querySelector('.skill-progress')) {
+                                const skillBars = entry.target.querySelectorAll('.skill-progress');
+                                skillBars.forEach(bar => {
+                                    const width = bar.getAttribute('data-width');
+                                    setTimeout(() => {
+                                        bar.style.width = width;
+                                    }, 300);
+                                });
+                            }
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                animateElements.forEach(element => {
+                    observer.observe(element);
+                });
+            }, 1500);
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('hidden');
+                } else {
+                    backToTopButton.classList.add('hidden');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Navbar background on scroll
+            const navbar = document.querySelector('nav');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 100) {
+                    navbar.classList.add('bg-primary', 'shadow-md');
+                } else {
+                    navbar.classList.remove('bg-primary', 'shadow-md');
+                }
+            });
+            
+            // Contact form submission
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Send email using EmailJS
+                emailjs.send("service_7tq6h7j", "template_2x8k9p8", {
+                    from_name: name,
+                    from_email: email,
+                    subject: subject,
+                    message: message
+                })
+                .then(function(response) {
+                    alert(`Thank you for your message, ${name}! I'll get back to you soon.`);
+                    contactForm.reset();
+                }, function(error) {
+                    // If EmailJS fails, use mailto as fallback
+                    const mailtoLink = `mailto:capasimthembile@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
+                    window.location.href = mailtoLink;
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- EmailJS Integration -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("sm7j7Gxx5csSR6U9Q"); // You'll need to replace this with your actual EmailJS public key
+        })();
+    </script>
+</body>
+</html>
